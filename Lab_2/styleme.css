@@ -1,0 +1,35 @@
+body {
+    background-color: hsla(52, 100%, 50%, 0.758);
+    font-family: Arial, sans-serif;
+   text-align: left
+}
+
+h1, h2 {
+    color: black;
+}
+
+div {
+    
+    color: black;
+
+}
+
+p {
+    font-size: 16px;
+    color: black;
+}
+
+ul {
+    list-style-type: square;
+    color: black;
+}
+/*ol {
+    list-style-type: 
+
+}*/
+
+img {
+    width: 160px;
+    height: 120px;
+}
+
