@@ -15,10 +15,10 @@ header {
     align-items: center;
 }
 
-.registration_Form {
+/*.registration_Form {
     /* display: flex;
-    justify-content: space-evenly; */
-}
+    justify-content: space-evenly; 
+}*/
 
 #form_div::after {
     content: "";
@@ -84,12 +84,9 @@ button {
 }
 
 button:hover {
-    display: po;
+    display:flex
 }
 
-.split{
-    /* min-width: 50%; */
-}
 
 label, select, option, textarea, input{
     min-width: 50%;
