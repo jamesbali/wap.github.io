@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script> 
+
+// function Person(name) {
+//     this.name = name;
+//     this.sayHello = function() {
+//         console.log("Hello, " + this.name + "!");
+//     };
+// }
+
+// var person1 = new Person("Alice");
+// var person2 = new Person("Bob");
+
+// person1.sayHello();
+// person2.sayHello();
+
+// var car = {
+//     brand: "Toyota",
+//     getModel: function() {
+//         return this.brand + " Camry";
+//     }
+// };
+
+// var getToyotaModel = car.getModel;
+// console.log(getToyotaModel());
+
+// function outer() {
+//     inner();
+//     function inner() {
+//         console.log(this);
+//     }
+// }
+
+// outer();
+
+// function showName() {
+//     console.log(this.name);
+// }
+
+// var obj1 = { name: "Alice", showName: showName };
+// var obj2 = { name: "Bob", showName: showName };
+
+// obj1.showName();
+// obj2.showName();
+// var person = {
+//     name: "John",
+//     greet: function() {
+//         console.log("Hello, " + this.name + "!");
+//     }
+// };
+
+// var greetFunction = person.greet;
+// greetFunction();
+
+// var person = {
+//     fName: "John",
+//     sayName: function() {
+//         console.log(this.fName);
+//     }
+// };
+
+// var say = person.sayName;
+// say();
+
+
+// function greet() {
+//     console.log(this.message);
+// }
+
+// var messenger = {
+//     message: "Hello, World!"
+// };
+
+// var sayHello = greet.bind(messenger);
+// sayHello();
+
+
+// function Dog(firstName) {
+//     this.firstName = firstName;
+//     this.bark = function() {
+//         console.log(this.firstName + " says woof!");
+//     };
+// }
+
+// var dog1 = new Dog("Buddy");
+// var barkFunction = dog1.bark;
+// barkFunction();
+
+// var car = {
+//     brand: "Toyota",
+//     details: {
+//         model: "Camry",
+//         getInfo: function() {
+//             console.log(this.brand + " " + this.model);
+//         }
+//     }
+// };
+
+// var getCarInfo = car.details.getInfo;
+// getCarInfo();
+
+
+
+  var obj = {
+     message : "hello",
+     
+     sayHello(){
+    console.log(this.message);
+  }
+
+
+  };
+  setTimeout(obj.sayHello.bind(obj), 1000);
+
+  setTimeout(() => obj.sayHello.apply(obj));
+
+
+
+
+
+
+    
+
+// var name = "Global";
+
+// function greet() {
+//     console.log("Hello, " + this.name + "!");
+// }
+
+// greet();
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

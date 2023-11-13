@@ -36,14 +36,20 @@ let group = {
            this.students.forEach(  student =>  {
     
                 console.log(this.title + ": " + student
-    
                 );
     
              });
-    
          }
     
      };
     
      group.showList();
+
+     //Self Pattern method
+
+
+
+     
+
+
     
