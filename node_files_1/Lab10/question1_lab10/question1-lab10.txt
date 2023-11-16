@@ -1,0 +1,327 @@
+
+
+
+Callback Queues in Node.js
+
+In Node.js, there are several callback queues, and they are associated with different phases in the event loop as indicated below;
+
+1.	Timers Queue: Callbacks scheduled by setTimeout() and setInterval() functions.
+
+setTimeout (() => {
+
+ 	 console.log( 'This callback is in the Timers Queue. ');
+}, 1000);
+
+
+2.	I/O Queue: Callbacks related to I/O operations, such as file reading, network requests, and database queries.
+
+const fs = require('fs');
+fs.readFile ('file.txt', 'utf8', (err, data) => {
+  	console.log('This callback is in the I/O Queue.');
+});
+
+
+3.	Close Callbacks Queue: Callbacks registered via process.nextTick() and some close events, like socket.on('close', ...).
+
+process.nextTick(() => {
+ 	 console.log('This callback is in the Close Callbacks Queue.');
+});
+
+4.	Idle, Prepare, Poll, and Check Queues: These are internal queues used by Node.js for specific phases of the event loop.
+
+
+
+
+Question Two:
+
+console.log('start');
+
+setTimeout(() => console.log('timeout 1'), 0);
+setTimeout(() => {
+    console.log('timeout 2')
+    process.nextTick(() => console.log('nextTick 3'));
+}, 0);
+setTimeout(() => console.log('timeout 3'), 0);
+
+new Promise((resolve, reject) => resolve('Hello')).then(() => console.log('Promise...1'));
+new Promise((resolve, reject) => resolve('Hello')).then(() => console.log('Promise...2'));
+
+process.nextTick(() =>  console.log('nextTick 1'));
+process.nextTick(() =>  console.log('nextTick 2'));
+
+console.log('end');
+
+/*The Outout of the code is:
+    start
+    end
+    nextTick 1
+    nextTick 2
+    Promise...1
+    Promise...2
+    timeout 1
+    timeout 2
+    nextTick 3
+    timeout 3
+    
+    This output correctly reflects the order of execution based on the priorities in the Node.js event loop. 
+    
+    Synchronous code executes first (start, end).
+
+    Microtasks (process.nextTick) are executed next (nextTick 1, nextTick 2). 
+    These microtasks have higher priority and are executed before the next macrotask.
+
+    Promises are executed as microtasks (Promise...1, Promise...2).
+
+    setTimeout callbacks are executed as macrotasks (timeout 1, timeout 2, timeout 3).
+    The process.nextTick callback inside the second setTimeout (nextTick 3) is added to the microtask queue. 
+    This microtask is executed after the setTimeout callbacks but before the next macrotask.
+
+    This output aligns with the expected behavior of the Node.js event loop, 
+    where microtasks are prioritized over macrotasks, and within microtasks, process.nextTick has higher priority than Promises.
+
+    
+END*/
+
+
+
+Question Three
+
+// What's the output of the code below? Try to understand how it works as we explained in the class.
+
+const fs = require('fs');
+
+
+fs.readFile('hello.txt', () => {
+
+    console.log('readFile....');
+
+});
+
+setTimeout(() => console.log('timeout'), 0);
+
+setImmediate(() => console.log('Immediate'));
+
+/* The output of the code is shown below;
+
+timeout
+readFile...
+Immediate
+
+The output is consistent with the execution of the node eventloop
+
+setTimeout callbacks are processed in the macrotask phase.
+Callbacks from asynchronous operations, such as fs.readFile, 
+are processed in the callback queue.
+setImmediate callbacks are processed in the check phase, 
+during the iteration of the event loop.
+
+*/
+
+
+Question Four
+
+
+/*What's the output of the code below when running in Node.js? 
+If for the same code running in browser, what's the output? Why is the output different?*/
+
+var message = 'Hello World';
+
+function logMessage() {
+
+    console.log(this.message);
+
+}
+
+logMessage();
+
+/* The out of the code is:
+
+undefined
+If the same code is run the browser environment, the output will be:
+
+ Hello World
+ 
+ This is because, in a browser environment, the this keyword inside a function refers to the global object (window), 
+ and window.message will correctly access the global variable message.
+*/
+
+
+Question Five
+
+
+/*5. What will happen when execute the code below? 
+If there's error, what's the error and what cause the error? 
+If no error, what's the output in the console? Assume pattern1.js and app.js 
+are in the same folder*/
+
+// pattern1.js
+
+module.exports.getName = function () {
+
+    console.log('Josh Edward');
+
+};
+
+
+// app.js
+
+const getName = require('./pattern1');
+
+getName();
+
+/*The code, if run in the current format will return an error.
+
+The error is getName is not a function
+
+*/
+
+
+Question Six
+
+/* 
+6. What will happen when execute the code below? 
+If there's error, what's the error and what cause the error? 
+If no error, what's the output in the console? 
+Assume pattern1.js and app.js are in the same folder
+
+*/
+
+// pattern1.js
+
+exports.getFirstname = function () {
+
+    console.log('Josh');
+
+};
+
+exports = {
+
+    getLastname: function(){
+
+        console.log('Edward');
+
+    }
+
+}
+
+module.exports = function (){
+
+    console.log('Josh Edward');
+
+}
+
+
+// app.js
+
+const getName = require('./pattern2');
+
+getName();
+
+/* The code would return an error since module './pattern2' can not be found.
+However, if the module is './pattern1', the output to the console will be;
+
+'Josh Edward'
+
+*/ 
+
+
+Question Seven
+
+
+/* What will happen when execute the code below? If there's error, 
+what's the error and what cause the error? If no error, 
+what's the output in the console? Assume pattern1.js and app.js are in the same folder*/
+
+// pattern1.js
+
+exports.getFirstname = function () {
+
+    console.log('Josh');
+
+};
+
+exports = {
+
+    getLastname: function(){
+
+        console.log('Edward');
+
+    }
+
+}
+
+module.exports.getFullname = function (){
+
+    console.log('Josh Edward');
+
+}
+
+
+// app.js
+
+const {getFullname} = require('./pattern2');
+
+getFullname();
+
+/* The code will output an error if executed 
+since the relative path for module  './pattern2' cannot be found.
+
+if './pattern2' is changed to './pattern1', the code will output
+
+'Josh Edward'
+
+*/
+
+Question Eight 
+
+
+//Review IIFE, bind, apply, call methods first, what's the value of result in the console?
+
+const result = (function(exports, module){
+
+    exports = module.exports;
+
+    exports.firstname = 'John';
+
+    module.exports.lastname = 'Smith';
+
+    exports = {
+
+        getFullName: function(){
+
+            console.log('John Smith')
+
+        }
+
+    }
+
+    return module.exports;
+
+}).apply(null, [null, {exports: {}}]);
+
+console.log(result);
+
+/* 
+The value of the output is;
+
+{ firstname: 'John', lastname: 'Smith' }
+
+
+The result is assigned the value returned by the Immediately Invoked Fnction Expression
+ IIFE, which is module.exports. module.exports has both firstname and lastname properties, 
+but it doesn't have the getFullName method,because exports was reassigned to a new object within the IIFE.
+
+Therefore, the value of result will be an object with only the firstname and lastname properties:
+
+
+*/
+
+
+
+
+
+
+
+
+
+
