@@ -17,3 +17,9 @@ module.exports.getName = function () {
 const getName = require('./pattern1');
 
 getName();
+
+/*The code, if run in the current format will return an error.
+
+The error is getName is not a function
+
+*/
