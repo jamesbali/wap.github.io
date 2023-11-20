@@ -1,0 +1,34 @@
+GET http://localhost:3000/books
+
+###
+
+GET http://localhost:3000/books/1
+
+###
+
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+    "title" : "NodesJs",
+    "ISBN" : "98973421",
+    "publishedDate" : "2021 -12 -18",
+    "author": "Mary Mei"
+
+}
+
+###
+
+PUT http://localhost:3000/books/1
+Content-Type: application/json
+
+{
+    "title" : "Angular IV",
+    "ISBN" : "98973421",
+    "publishedDate" : "2020 -08 -28",
+    "author": "Ruth Carson"
+}
+
+###
+
+DELETE http://localhost:3000/books/3

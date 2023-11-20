@@ -19,17 +19,20 @@ console.log (process.env.NODE_ENV);
 //4. Middleware
 
 // If the path is not povided for, then the request in not specific the a given URL.
+//In the app.use path -> /product  is the same as -> /product/*
+
 
 app.use ('/product', (req, res, next) => {
 
     console.log ('inside/product .....');
-    res.end('product');
+    //res.end('product');
+    next(); //delegate to the next available middleware.
+
 });
 
 app.use (function(req, res, next){
 
     console.log('1....')
-ß
     res.end('Hi!!!!');
 
 });
@@ -39,9 +42,6 @@ app.use (function(req, res, next){
 app.use ('/user',(req, res) => {
     res.end('Hi');
 });
-
-
-
 
 
 //4. Middleware
