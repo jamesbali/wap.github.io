@@ -61,7 +61,7 @@ module.exports = class Book {
 
        } 
        else {
-        throw new Error ('Book with ID: ${id} cannot be found in DB' );
+        throw new Error ('Book with ID: ${id} cannot be found in the Database' );
         }
 
     }
