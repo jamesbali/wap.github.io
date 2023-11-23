@@ -1,10 +1,12 @@
 
 const express = require ('express');
 
-const bookRouter = require('./routes/book-router')
-
 const app = express();
 app.use(express.json());
+
+
+
+const bookRouter = require('./routes/book-router')
 
 app.use('/books', bookRouter)
 

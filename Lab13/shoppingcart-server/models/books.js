@@ -48,7 +48,7 @@ module.exports = class Book {
             books[index] = this;
         }
         else {
-            throw new Error ('Books with ID: ${id} cannot be found in DB' );
+            throw new Error (`Books with ID: ${id} cannot be found in DB` );
         }
     }
 
@@ -61,7 +61,7 @@ module.exports = class Book {
 
        } 
        else {
-        throw new Error ('Book with ID: ${id} cannot be found in the Database' );
+        throw new Error (`Book with ID: ${id} cannot be found in the Database` );
         }
 
     }
